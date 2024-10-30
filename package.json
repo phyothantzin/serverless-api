@@ -1,0 +1,21 @@
+{
+  "name": "serverless-api",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Sverless api with express and drizzle",
+  "scripts": {
+    "dev": "serverless offline --stage dev",
+    "deploy": "serverless deploy --stage dev",
+    "remove": "serverless remove --stage dev"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.1",
+    "drizzle-orm": "^0.35.3",
+    "express": "^4.19.2",
+    "serverless-http": "^3.2.0"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.26.2",
+    "serverless-offline": "^14.3.3"
+  }
+}
