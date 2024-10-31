@@ -5,11 +5,12 @@
   "description": "Sverless api with express and drizzle",
   "scripts": {
     "dev": "serverless offline --stage dev --region ap-southeast-1",
-    "deploy": "serverless deploy --stage dev",
-    "remove": "serverless remove --stage dev"
+    "deploy": "serverless deploy --stage prod --region ap-southeast-1",
+    "remove": "serverless remove --stage prod --region ap-southeast-1"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.1",
+    "aws-sdk": "^2.1691.0",
     "drizzle-orm": "^0.35.3",
     "express": "^4.19.2",
     "serverless-http": "^3.2.0"
