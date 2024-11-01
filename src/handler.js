@@ -1,8 +1,11 @@
 import serverless from "serverless-http";
 import express from "express";
-import { getDbClient } from "./db/clients.js";
+import { getDbClient, getDrizzleDBClient } from "./db/clients.js";
+import User from "./db/schemas.js";
+import { eq } from "drizzle-orm";
 
 const app = express();
+app.use(express.json());
 
 app.get("/", async (req, res, next) => {
   const sql = await getDbClient();
@@ -15,10 +18,32 @@ app.get("/", async (req, res, next) => {
   });
 });
 
-app.get("/hello", (req, res, next) => {
-  return res.status(200).json({
-    message: "Hello from path!",
-  });
+app.get("/api/user", async (req, res, next) => {
+  const db = await getDrizzleDBClient();
+  const users = await db.select().from(User).limit(10);
+  return res.status(200).json(users);
+});
+
+app.get("/api/user/:id", async (req, res, next) => {
+  const db = await getDrizzleDBClient();
+  const { id } = req.params;
+  const user = await db.select().from(User).where(eq(User.id, id)).limit(1);
+  return res.status(200).json(user);
+});
+
+app.post("/api/user", async (req, res, next) => {
+  const { email } = await req.body;
+
+  if (!email) {
+    return res.status(400).json({
+      error: "Missing email",
+    });
+  }
+
+  const db = await getDrizzleDBClient();
+
+  const user = await db.insert(User).values({ email }).returning();
+  return res.status(201).json(user);
 });
 
 app.use((req, res, next) => {
