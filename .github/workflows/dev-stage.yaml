@@ -14,6 +14,7 @@ jobs:
       API_KEY: ${{ secrets.NEON_API_KEY }}
       STAGE: dev
       GH_TOKEN: ${{ github.token }} # github cli -> gh
+      AWS_REGION: ap-southeast-1
     steps:
       - uses: actions/checkout@v4
         with:
